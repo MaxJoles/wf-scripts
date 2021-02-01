@@ -58,6 +58,8 @@
             console.log(equityProjection);
             
         };
+        
+        console.log("testing testing");
 
 
     });
