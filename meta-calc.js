@@ -55,13 +55,12 @@
         var equityProjection = 0;
         var growthRate = annualGrowth/100;
         
-        for (let index = 0; index < 10; index++) {
+        for (let index = 1; index < 11; index++) {
             console.log(index); 
-            let equityProjection = restrictedEquity * (Math.pow(1 + growthRate, 10) - 1) / growthRate;
+            let equityProjection = restrictedEquity * (Math.pow(1 + growthRate, index) - 1) / growthRate;
             console.log(equityProjection);
         };
         
-
 
 
     });
