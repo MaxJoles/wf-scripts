@@ -54,7 +54,7 @@
         // restricted equity projects
         for (let index = 1; index < 11; index++) {
             console.log(index);
-            let equityProjection = restrictedEquity + (restrictedEquity * (index - 1));
+            let equityProjection = restrictedEquity + (annualGrowth * (index - 1));
             console.log(equityProjection);
             
         };
