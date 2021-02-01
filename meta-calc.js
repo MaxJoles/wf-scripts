@@ -56,10 +56,11 @@
             console.log(index);
             let equityProjection = restrictedEquity + (annualGrowth * (index - 1));
             console.log(equityProjection);
+            console.log("testing testing");
             
         };
         
-        console.log("testing testing");
+
 
 
     });
