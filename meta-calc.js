@@ -1,5 +1,14 @@
+    // Create our number formatter.
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+
+
     // form variables
-    $(".z-meta-form").click(function () {
+    $(".z-submit-button").click(function () {
+        event.preventDefault();
         var targetEbitda = $('input[name="targetEBITDA"]').val();
         console.log(targetEbitda);
         var acquisitionMultiple = $('input[name="acquisitionMultiple"]').val();
@@ -33,11 +42,11 @@
         console.log(percentageRestrictedEquity);
         $('input[name="percentageRestrictedEquity"]').val(percentageRestrictedEquity);
 
-        var cashMultiple = acquisitionMultiple * (percentageCash/100);
+        var cashMultiple = acquisitionMultiple * (percentageCash / 100);
         console.log(cashMultiple);
         $('input[name="cashMultiple"]').val(cashMultiple);
 
-        var restrictedEquityMultiple = acquisitionMultiple * (percentageRestrictedEquity/100);
+        var restrictedEquityMultiple = acquisitionMultiple * (percentageRestrictedEquity / 100);
         console.log(restrictedEquityMultiple);
         $('input[name="restrictedEquityMultiple"]').val(restrictedEquityMultiple);
 
@@ -52,15 +61,17 @@
 
 
         // restricted equity projects
-        var equityProjection = 0;
-        var growthRate = annualGrowth/100;
-        
-        for (let index = 1; index < 11; index++) {
-            console.log(index); 
-            let equityProjection = restrictedEquity * (Math.pow(1 + growthRate, index) - 1) / growthRate;
+        var growthRate = 1 + (annualGrowth / 100);
+        var dividendRate = dividendYield/100;
+        for (let index = 0; index < 10; index++) {
+            let headerLabel = index + 1;
+            console.log(headerLabel);
+            equityProjection = Math.round(restrictedEquity * (Math.pow(growthRate, index)));
             console.log(equityProjection);
+            annualDividend = Math.round(equityProjection * dividendRate);
+            console.log(annualDividend);
+            $("#restricted-equity-" + headerLabel).text(formatter.format(equityProjection));
+            $("#annual-dividend-" + headerLabel).text(formatter.format(annualDividend));
         };
-        
-
 
     });
