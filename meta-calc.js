@@ -1,14 +1,11 @@
-<script>
 
-    // Create our number formatter.
+    // Create currency formatter.
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
 
-
-
-    // form variables
+    // capture form inputs as variables
     $(".z-submit-button").click(function () {
         event.preventDefault();
         var targetEbitda = $('input[name="targetEBITDA"]').val();
@@ -25,8 +22,7 @@
         var conHoldbackPercetage = $('input[name="conHoldbackPercetage"]').val();
         var conHoldbackYears = $('input[name="conHoldbackYears"]').val();
 
-
-        // Calculated Fields
+        // Calculate fields based on inputs
         var percentageRestrictedEquity = 100 - percentageCash;
         $('input[name="percentageRestrictedEquity"]').val(percentageRestrictedEquity);
 
@@ -47,12 +43,11 @@
         // 10 year restricted equity functions
         var growthRate = 1 + (annualGrowth / 100);
         var dividendRate = dividendYield / 100;
-       
+        var allCash = cash + restrictedEquity;
         for (let index = 0; index < 10; index++) {
             let headerLabel = index + 1;
             equityProjection = Math.round(restrictedEquity * (Math.pow(growthRate, index)));
             annualDividend = Math.round(equityProjection * dividendRate);
-
             $("#restricted-equity-" + headerLabel).text(formatter.format(equityProjection));
             $("#annual-dividend-" + headerLabel).text(formatter.format(annualDividend));
 
@@ -72,16 +67,21 @@
                 $("#private-exit-" + headerLabel).text(formatter.format(privateExit));
                 let publicExit = annualDividend;
                 $("#public-exit-" + headerLabel).text(formatter.format(publicExit));
-
             }
-
-
         };
 
+
+        // All cash 
+        for (let index = 0; index < 10; index++) {
+        let headerLabel = index + 1;
+            if (index == 0) {
+                $("#all-cash-" + headerLabel).text(formatter.format(allCash));
+            } else {
+                $("#all-cash-" + headerLabel).text(formatter.format(0));
+             
+            }
+            
+        }
+
+
     });
-
-</script>
-
-
-
-
