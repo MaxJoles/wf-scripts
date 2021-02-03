@@ -1,8 +1,10 @@
+<script>
 
     // Create currency formatter.
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
+        maximumFractionDigits: 0,
     });
 
     // capture form inputs as variables
@@ -43,7 +45,6 @@
         // 10 year restricted equity functions
         var growthRate = 1 + (annualGrowth / 100);
         var dividendRate = dividendYield / 100;
-        var allCash = cash + restrictedEquity;
         for (let index = 0; index < 10; index++) {
             let headerLabel = index + 1;
             equityProjection = Math.round(restrictedEquity * (Math.pow(growthRate, index)));
@@ -71,17 +72,32 @@
         };
 
 
-        // All cash 
+
+        // Cash + Investments
+        var allCash = cash + restrictedEquity;
+        var stockReturns = 0;
         for (let index = 0; index < 10; index++) {
-        let headerLabel = index + 1;
+            let headerLabel = index + 1;
             if (index == 0) {
                 $("#all-cash-" + headerLabel).text(formatter.format(allCash));
-            } else {
-                $("#all-cash-" + headerLabel).text(formatter.format(0));
-             
+                $("#cash-stock-" + headerLabel).text(formatter.format(allCash));
+                $("#cash-re-" + headerLabel).text(formatter.format(allCash));
             }
-            
-        }
+
+            else if (index == 9) {
+                $("#all-cash-" + headerLabel).text(formatter.format(0));
 
 
+
+            } else {
+                stockReturns = (stockReturns + allCash) * stockMarketReturns/100;
+                console.log(stockReturns);
+                let reReturns = allCash * realEstateYield/100;
+                $("#all-cash-" + headerLabel).text(formatter.format(0));
+                $("#cash-stock-" + headerLabel).text(formatter.format(stockReturns));
+                $("#cash-re-" + headerLabel).text(formatter.format(reReturns));
+            }
+        };
     });
+
+</script>
