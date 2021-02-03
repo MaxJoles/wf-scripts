@@ -1,3 +1,5 @@
+<script>
+
     // Create our number formatter.
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -62,7 +64,7 @@
 
         // restricted equity projects
         var growthRate = 1 + (annualGrowth / 100);
-        var dividendRate = dividendYield/100;
+        var dividendRate = dividendYield / 100;
         for (let index = 0; index < 10; index++) {
             let headerLabel = index + 1;
             console.log(headerLabel);
@@ -72,6 +74,23 @@
             console.log(annualDividend);
             $("#restricted-equity-" + headerLabel).text(formatter.format(equityProjection));
             $("#annual-dividend-" + headerLabel).text(formatter.format(annualDividend));
+
+            if (index == 0) {
+                let privateExit = annualDividend + cash;
+                $("#private-exit-" + headerLabel).text(formatter.format(privateExit));
+            } else if (index == 9) {
+                let privateExit = equityProjection + annualDividend;
+                $("#private-exit-" + headerLabel).text(formatter.format(privateExit));
+
+            } else {
+                let privateExit = annualDividend;
+                $("#private-exit-" + headerLabel).text(formatter.format(privateExit));
+
+            }
+
+
         };
 
     });
+
+</script>
