@@ -70,11 +70,8 @@
             }
         };
 
-
-
         // Cash + Investments
         var allCash = cash + restrictedEquity;
-        let stockReturns = 0;
         var marketRate = stockMarketReturns + 1;
         for (let index = 0; index < 10; index++) {
             let headerLabel = index + 1;
@@ -86,12 +83,14 @@
             }
 
             else if (index == 9) {
+                stockInterest = Math.round(allCash * (Math.pow(marketRate, index)) - (allCash * (Math.pow(marketRate, pastMonth))));
+                let reReturns = (allCash * realEstateYield) + (allCash * (1 + realEstateAppreciation) ** 9) - allCash;
+                $("#cash-stock-" + headerLabel).text(formatter.format(stockInterest));
                 $("#all-cash-" + headerLabel).text(formatter.format(0));
+                $("#cash-re-" + headerLabel).text(formatter.format(reReturns));
 
             } else {
-                stockReturns = (stockReturns + allCash) * stockMarketReturns;
-                stockInterest = Math.round(allCash * (Math.pow(marketRate, index))-(allCash * (Math.pow(marketRate, pastMonth))));
-                console.log(stockReturns);
+                stockInterest = Math.round(allCash * (Math.pow(marketRate, index)) - (allCash * (Math.pow(marketRate, pastMonth))));
                 let reReturns = allCash * realEstateYield;
                 $("#all-cash-" + headerLabel).text(formatter.format(0));
                 $("#cash-stock-" + headerLabel).text(formatter.format(stockInterest));
